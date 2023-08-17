@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <div class="d-flex flex-column" style="border: 2px solid black; padding: 20px;">
+      <h4>Edytuj Pracownika</h4>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+        <label>Nr prac.:</label>
+        <input type="text" id="nr_prac" ngModel name="nr_prac" [ngModel]="pracownik!.nr_worker">
+      </div>
+      <div class="d-flex flex-row justify-content-between"  style="margin-top: 5px;">
+        <label>Dział:</label>
+        <input type="text" id="section" ngModel name="section"  [ngModel]="pracownik!.section">
+      </div>
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+        <label>Pion:</label>
+        <input type="text" id="pion" ngModel name="pion"  [ngModel]="pracownik!.pion">
+      </div>
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" >
+        <label>Imię:</label>
+        <input type="text" id="firstname" ngModel name="firstname"  [ngModel]="pracownik!.firstname">
+      </div>
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+        <label>Nazwisko:</label>
+        <input type="text" id="lastname" ngModel name="lastname"  [ngModel]="pracownik!.lastname">
+      </div>
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+        <label>position:</label>
+        <input type="text" id="position" ngModel name="position"  [ngModel]="pracownik!.position">
+      </div>
+      <div class="d-flex justify-content-start" style="margin-top: 10px;">
+        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit">OK</button>
+        <button class="btn btn-danger" routerLink="">Anuluj</button>
+      </div>
+    </form>
+    </div>
+  </div>
+  
