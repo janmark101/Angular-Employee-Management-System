@@ -1,0 +1,28 @@
+<div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
+    <div class="d-flex flex-column" style="border: 2px solid black; padding: 20px;">
+      <h4 *ngIf="!add_category">Dodaj Zadanie</h4>
+      <h4 *ngIf="add_category">Dodaj Kategorie</h4>
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+        <select [(ngModel)]="selectedOption" name="selectedOption">
+            <option *ngFor="let option of Category" >{{ option }}</option>
+          </select>
+        <button type="button" class="btn btn-primary" (click)="CategoryFunc()" *ngIf="!add_category">Nowa kategoria</button>
+        <button type="button" class="btn btn-primary" (click)="CategoryFunc()" *ngIf="add_category" >Nowe zadanie</button>
+      </div>
+      <div class="row" *ngIf="!add_category">
+        <label>Treść zadania:</label>
+        <input type="text" id="task_content" ngModel name="task_content" style="max-width: 100%;">
+    </div>
+    <div class="row" *ngIf="add_category">
+        <label>Nazwa kategori:</label>
+        <input type="text" id="category_name" ngModel name="category_name" style="max-width: 100%;">
+    </div>
+      <div class="d-flex justify-content-start" style="margin-top: 10px;">
+        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit">OK</button>
+        <button class="btn btn-danger" routerLink="../">Anuluj</button>
+      </div>
+    </form>
+    </div>
+  </div>
+  

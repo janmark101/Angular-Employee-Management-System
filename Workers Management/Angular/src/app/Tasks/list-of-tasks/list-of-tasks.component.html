@@ -1,0 +1,41 @@
+<div class="container" style="margin-top: 100px;" > 
+    <div class="card" style="background-color: blue;">
+        <h2 style="color: white; margin-left: 10px;">{{worker!.firstname}} {{worker!.lastname}} - zadania</h2>
+        <div class="card" style="margin-top: 1px;" *ngFor="let task of worker!.tasks; let i = index">
+            <div class="div" style="margin-left: 10px; margin-top: 10px; display: flex;">
+                <div style="flex: 1;">
+                    <h5>Treść zadania :</h5>
+                    <h3 style="display: inline-block;transform: skewX(-10deg);">{{task.task_content}}</h3>
+                    
+                    <div style="display: flex; align-items: center;">
+                        <h4 style="margin-right: 10px;">Status :</h4>
+                        <app-drop-down (ItemEvent)="changeStatus($event)" [worker]="worker" [id] ="i">
+                    </app-drop-down>
+                    
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <h4>Zaawansowanie:</h4>
+                        <mat-slider min="0" max="100" step="5" value="0" class="example-margin" >
+                            <input matSliderThumb [(ngModel)]="value[i]" #slider>
+                        </mat-slider>
+                        <label class="example-value-label" style="margin-left: 5px;">[{{slider.value}}]</label>
+                    </div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; justify-content: space-between; width: 20%;margin-right: 5px;margin-bottom: 5px;margin-top: -5px;">
+                    <button class="btn btn-primary" [routerLink]="[i,'edit']">Edytuj</button>
+                    <button class="btn btn-secondary" [routerLink]="[i,'move']">Przenieś</button>
+                    <button class="btn btn-danger" (click)="DeleteTask(i)">Usuń</button>
+                    <button class="btn btn-success" (click)="SaveStatus(i)">Zapisz</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="d-flex justify-content-end" style="margin-bottom: 10px;"> 
+        <button class="btn btn-danger" style="width: 30%;margin-top: 10px;margin-right: 10px;" routerLink="">Cofnij</button>                          
+        <button class="btn btn-primary" style="width: 30%;margin-top: 10px;" routerLink="add_task">Dodaj zadanie</button>
+    </div>
+ </div>
+
