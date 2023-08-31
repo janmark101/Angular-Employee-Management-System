@@ -19,6 +19,9 @@ export class AddTaskComponent implements OnInit{
   selectedOption: string |undefined ;
   add_category = false;
 
+  isAdding : boolean = false;
+  Message : any;
+
   ngOnInit(): void {
     this.id = this.acitvroute.snapshot.params["id"];
     this.CategorySub = this.service.getCategory().subscribe((data: string[]) => {
@@ -32,13 +35,28 @@ export class AddTaskComponent implements OnInit{
 
   onSubmit(form: NgForm){
     if (this.add_category === true){
-      this.service.addCategory(form.value.category_name);
-      this.add_category = !this.add_category
+      if (form.valid){
+        this.service.addCategory(form.value.category_name);
+        this.add_category = !this.add_category
+      }
+      else{
+        this.Message = "Dont leave any empty fields!";
+      }
     }
     else{
+      if (form.valid) {
+        this.isAdding = true;
     const newTask = new Task(form.value.task_content,"Nie rozpoczęte",0,this.selectedOption!);
+    
     this.service.addTaskWorker(newTask,this.id!);
-    this.route.navigate(['/worker',this.id,'tasks'])
+    setTimeout(()=>{
+      this.isAdding = false;
+      this.route.navigate(['workers',this.id,'tasks']);
+    },1000);
+      }
+      else{
+        this.Message = "Dont leave any empty fields!";
+      }
     }
   }
 

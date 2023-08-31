@@ -2,7 +2,7 @@
     <div class ="card" style="background-color: blue;"  >
         <h1 style="color: white;">Lista pracowników</h1>   
         <div class="card" *ngFor="let worker of workers;let i =index" style="margin-top: 1px;">
-            <a [routerLink]="['/worker',i,'tasks']" style="text-decoration: none;color: black;">
+            <a  style="text-decoration: none;color: black;cursor: pointer;" (click)="DelayNavigation(i)">
             <div class="div" style="margin-left: 10px;margin-top: 10px;">
                 <div class="d-flex flex-row justify-content-between" >
                 <h3>{{worker.firstname}} {{worker.lastname}}</h3>
@@ -13,7 +13,7 @@
             </div>
         </a>
             <div class="d-flex justify-content-end" style="margin-bottom: 10px;">                           
-                <button class ="btn btn-primary" style ="max-width: 10%;margin-right: 5px;" [routerLink]="['/edit_worker',i]">Edytuj</button>
+                <button class ="btn btn-primary" style ="max-width: 10%;margin-right: 5px;" [routerLink]="['edit_worker',i]">Edytuj</button>
                 <button class ="btn btn-danger" style="max-width: 10%;margin-right: 5px;" (click)="Delete(i)">Usuń</button>
             </div>
         
@@ -24,4 +24,3 @@
         <button class="btn btn-primary" style="width: 30%;margin-top: 10px;" routerLink="add_worker">+</button>
     </div>
  </div>
-

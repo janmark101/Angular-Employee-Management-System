@@ -1,0 +1,79 @@
+
+    <div class="container"  *ngIf="!Login_SignUp">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <span class="fa fa-user-o"></span>
+                    </div>
+                    <h3 class="text-center mb-4">Sign In</h3>
+                    <div action="#" class="login-form">
+                        <form (ngSubmit)="OnSubmit(form)" #form="ngForm">
+                        <div class="form-group">
+                            <input type="email" class="form-control rounded-left" placeholder="Email" style="margin-bottom: 10px;border: 1px solid rgb(80, 136, 192)" ngModel name="email" required >
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" class="form-control rounded-left" placeholder="Password" style="border: 1px solid rgb(80, 136, 192);" ngModel name="password" required >
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" style="margin-top: 15px;"
+                                class="form-control btn btn-primary rounded submit px-3">Login</button>
+                        </div>
+                        <div class="form-group d-md-flex" style="margin-top: 10px;">
+                            <div class="w-50">
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a (click)="ChangeLogin_SingUp()" class="native-link" style="cursor:pointer">Not a member? Sing Up!</a>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <h4 style="text-align: center;margin-top: 10px;" [ngStyle]="{'color' : Color}">{{Error}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container" *ngIf="Login_SignUp">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-5">
+                <div class="login-wrap p-4 p-md-5">
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <span class="fa fa-user-o"></span>
+                    </div>
+                    <h3 class="text-center mb-4">Sign Up</h3>
+                    <div action="#" class="login-form">
+                        <form (ngSubmit)="OnSubmit(form)" #form="ngForm">
+                        <div class="form-group">
+                            <input type="email" class="form-control rounded-left" placeholder="Email" style="margin-bottom: 10px;border: 1px solid rgb(80, 136, 192)" ngModel name="email" required minlength="6">
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" class="form-control rounded-left" placeholder="Password" style="border: 1px solid rgb(80, 136, 192);margin-bottom: 10px;" ngModel name="password" required minlength="6">
+                        </div>
+                        <div class="form-group d-flex">
+                            <input type="password" class="form-control rounded-left" placeholder="Confirm password" style="border: 1px solid rgb(80, 136, 192);" ngModel name="password_2" required minlength="6">
+                        </div>
+                        <small>*Password requaires min. 6 chars</small>
+                        <div class="form-group">
+                            <button type="submit" style="margin-top: 15px;"
+                                class="form-control btn btn-primary rounded submit px-3">Sing Up</button>
+                        </div>
+                        <div class="form-group d-md-flex" style="margin-top: 10px;">
+                            <div class="w-50">
+                            </div>
+                            <div class="w-50 text-md-right">
+                                <a (click)="ChangeLogin_SingUp()" class="native-link" style="cursor: pointer;">Have an account? Sign In!</a>
+                            </div>
+                            
+                        </div>
+                    </form>
+                    <h4 style="text-align: center;margin-top: 10px;" [ngStyle]="{'color' : Color}">{{Error}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

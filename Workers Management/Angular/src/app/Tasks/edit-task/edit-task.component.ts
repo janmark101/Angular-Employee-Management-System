@@ -44,7 +44,7 @@ export class EditTaskComponent implements OnInit{
     if (this.newStatusTask === undefined){
       const task : Task = new Task(form.value.task_content,this.worker!.tasks[this.id_task!].status,this.defaultSliderValue,this.selectedCategory!);
       this.service.editTask(task,this.id_worker!,this.id_task!);
-    this.route.navigate(['/worker',this.id_worker,'tasks']);
+    this.route.navigate(['/workers',this.id_worker,'tasks']);
     }
     else{
       const task : Task = new Task(form.value.task_content,this.newStatusTask,this.defaultSliderValue,this.selectedCategory!);

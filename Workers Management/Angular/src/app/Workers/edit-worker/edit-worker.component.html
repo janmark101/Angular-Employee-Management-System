@@ -27,10 +27,15 @@
         <input type="text" id="position" ngModel name="position"  [ngModel]="worker!.position">
       </div>
       <div class="d-flex justify-content-start" style="margin-top: 10px;">
-        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit">OK</button>
-        <button class="btn btn-danger" routerLink="">Anuluj</button>
+        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit" [disabled]="isEdditing">OK</button>
+        <button class="btn btn-danger" routerLink="/workers" [disabled]="isEdditing">Anuluj</button>
       </div>
     </form>
+    <div style="text-align: center;" *ngIf="isEdditing">
+      <app-spinner>
+        
+      </app-spinner>
+    </div>
     </div>
   </div>
   

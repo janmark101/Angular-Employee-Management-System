@@ -1,36 +1,43 @@
 <div class="container d-flex justify-content-center align-items-center" style="height: 50vh;">
     <div class="d-flex flex-column" style="border: 2px solid black; padding: 20px;">
+      <small style="text-align: center;color: red;">{{Message}}</small>
       <h4>Dodaj Pracownika</h4>
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
         <label>Nr prac.:</label>
-        <input type="text" id="nr_worker" ngModel name="nr_worker">
+        <input type="text" id="nr_worker" ngModel name="nr_worker" required>
       </div>
-      <div class="d-flex flex-row justify-content-between"  style="margin-top: 5px;">
+      <div class="d-flex flex-row justify-content-between"  style="margin-top: 5px;" required>
         <label>Dział:</label>
         <input type="text" id="section" ngModel name="section">
       </div>
-      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" required>
         <label>Pion:</label>
         <input type="text" id="pion" ngModel name="pion">
       </div>
-      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" >
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" required>
         <label>Imię:</label>
         <input type="text" id="firstname" ngModel name="firstname">
       </div>
-      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" required>
         <label>Nazwisko:</label>
         <input type="text" id="lastname" ngModel name="lastname">
       </div>
-      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
+      <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" required>
         <label>Stanowisko:</label>
-        <input type="text" id="position" ngModel name="position">
+        <input type="text" id="position" ngModel name="position" required>
       </div>
       <div class="d-flex justify-content-start" style="margin-top: 10px;">
-        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit">OK</button>
-        <button class="btn btn-danger" routerLink="">Anuluj</button>
+        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit" [disabled]="isAdding">OK</button>
+        <button class="btn btn-danger" routerLink="/workers" [disabled]="isAdding">Anuluj</button>
+        
       </div>
+      <div style="text-align: center;" *ngIf="isAdding">
+        <app-spinner>
+    
+        </app-spinner>
+      </div>  
     </form>
+    
     </div>
   </div>
-  

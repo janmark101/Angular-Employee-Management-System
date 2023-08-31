@@ -13,7 +13,11 @@ import {MatSliderModule} from '@angular/material/slider';
 import { EditTaskComponent } from './Tasks/edit-task/edit-task.component';
 import { MoveTaskComponent } from './Tasks/move-task/move-task.component';
 import { AddTaskComponent } from './Tasks/add-task/add-task.component';
-
+import { AuthLoginComponent } from './auth-login/auth-login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RoutingWorkersComponent } from './Workers/routing-workers/routing-workers.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +29,20 @@ import { AddTaskComponent } from './Tasks/add-task/add-task.component';
     DropDownComponent,
     EditTaskComponent,
     MoveTaskComponent,
-    AddTaskComponent
+    AddTaskComponent,
+    AuthLoginComponent,
+    RoutingWorkersComponent,
+    NavbarComponent,
+    SpinnerComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    MatSliderModule
+    MatSliderModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

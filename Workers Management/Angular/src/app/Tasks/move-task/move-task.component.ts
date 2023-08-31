@@ -19,6 +19,8 @@ export class MoveTaskComponent {
   new_task_worker : Worker | undefined;
   Status : string | undefined;
 
+  Message : any;
+
 
   ChooseWorker(worker:Worker,id:number){
     this.id_choosen_worker = id;
@@ -44,8 +46,19 @@ export class MoveTaskComponent {
   }
 
   ApproveMove(){
-    this.service.MoveTask(this.activroute.snapshot.params['id'],this.activroute.snapshot.params['idTask'],this.Status!,this.new_task_worker!);
-    this.route.navigate(['/worker',this.activroute.snapshot.params['id'],'tasks']);
+    if (this.choosenWorker !== undefined){
+      if (this.Status !== undefined){
+        this.service.MoveTask(this.activroute.snapshot.params['id'],this.activroute.snapshot.params['idTask'],this.Status!,this.new_task_worker!);
+        this.route.navigate(['/workers',this.activroute.snapshot.params['id'],'tasks']);
+      }
+      else {
+        this.Message = 'Choose status!';
+      }
+    }
+    else {
+      this.Message = "Choose worker!";
+    }
+
   }
 
   chooseStatus(status:string){

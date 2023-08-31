@@ -20,6 +20,7 @@ export class ListOfTasksComponent implements OnInit{
   };
   selected = "Nie rozpoczete";
 
+  WorkerTasks : any[] = [];
 
   constructor(private acitvroute : ActivatedRoute,private service : WorkerServiceService){}
 
@@ -28,9 +29,13 @@ export class ListOfTasksComponent implements OnInit{
   ngOnInit(): void {
     this.id_worker = this.acitvroute.snapshot.params["id"];
     this.worker = this.service.getWorker(this.id_worker!);
-    for (let i =0 ; i < this.worker.tasks.length; i++){
-      this.value![i] = this.worker.tasks[i].advanced;
+    this.WorkerTasks = Object.values(this.worker!?.tasks);
+    
+    for (let i =0 ; i < this.WorkerTasks.length; i++){
+      this.value![i] = this.WorkerTasks[i].advanced;
     }
+
+
   }
 
   changeStatus(status:string){

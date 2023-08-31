@@ -13,16 +13,16 @@ export class EditWorkerComponent implements OnInit{
   id : number | null  | undefined;
   worker : Worker | undefined;
 
+  isEdditing : boolean = false;
   constructor(private router : ActivatedRoute,private service : WorkerServiceService, private route : Router){}
 
   ngOnInit(): void {
     this.id = this.router.snapshot.params["id"];
-    console.log(this.id);
     this.worker = this.service.getWorker(this.id!);
-    console.log(this.worker);
   }
 
   onSubmit(form: NgForm){
+    this.isEdditing = true;
     this.worker!.nr_worker = form.value.nr_worker;
     this.worker!.section = form.value.section;
     this.worker!.pion = form.value.pion;
@@ -31,6 +31,10 @@ export class EditWorkerComponent implements OnInit{
     this.worker!.position = form.value.position;
 
     this.service.editWorker(this.id!,this.worker!);
-    this.route.navigate(['']);
+    setTimeout(()=>{
+      this.isEdditing = false;
+      this.route.navigate(['/workers']);
+    },500);
+
   }
 }

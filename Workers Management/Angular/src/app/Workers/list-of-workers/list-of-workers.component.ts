@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Worker } from 'src/app/Models/worker.models';
 import { WorkerServiceService } from 'src/app/Service/worker-service.service';
@@ -9,17 +10,19 @@ import { WorkerServiceService } from 'src/app/Service/worker-service.service';
   styleUrls: ['./list-of-workers.component.css']
 })
 export class ListOfWorkersComponent implements OnInit{
-  workers : Worker[] | undefined;
+  workers : Worker[] = [];
   private workersSub : Subscription | undefined;
   list_of_tasks : string[] = [];
 
-  constructor(private service : WorkerServiceService){}
+  constructor(private service : WorkerServiceService,private router:Router){}
 
   ngOnInit(): void {
-    this.workersSub = this.service.getWorkers().subscribe((data: Worker[]) => {
+    this.workersSub = this.service.getWorkers().subscribe((data: Worker[]) => {           
       this.workers = data;
     });
-    this.list_of_tasks = this.service.get_list_of_tasks();
+    // this.list_of_tasks = this.service.get_list_of_tasks();
+
+    //console.log(this.workers);
   }
 
   ngOnDestroy(): void {
@@ -28,6 +31,17 @@ export class ListOfWorkersComponent implements OnInit{
 
 
   Delete(prac : number){
-    this.service.deleteWorker(prac);
+    this.service.deleteWorker(prac).subscribe((data:any[])=>{
+      this.workers = data;
+    },(error:any)=>{
+      console.error(error);
+      
+    });
+  }
+
+  DelayNavigation(i:number){
+    setTimeout(()=>{
+      this.router.navigate(['workers/',i,'tasks'])
+    },300);
   }
 }

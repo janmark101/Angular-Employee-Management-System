@@ -11,7 +11,7 @@ export class DropDownComponent implements OnInit{
   
   @Output() ItemEvent = new EventEmitter<string>();
 
-  @Input() worker : Worker | undefined;
+  @Input() WorkerTasks :any[] | undefined;
   @Input() id : number | undefined;
 
   status : string | undefined ;
@@ -23,7 +23,7 @@ export class DropDownComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.status = this.worker?.tasks[this.id!].status;
+    this.status = this.WorkerTasks![this.id!].status;
     this.choosen_option = this.status;
   }
 }
