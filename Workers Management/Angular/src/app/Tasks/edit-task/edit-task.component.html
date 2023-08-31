@@ -25,10 +25,15 @@
         <label class="example-value-label" style="margin-left: 5px;">[{{slider.value}}]</label>
       </div>
       <div class="d-flex justify-content-start" style="margin-top: 10px;">
-        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit">OK</button>
-        <button class="btn btn-danger" routerLink="../../">Anuluj</button>
+        <button class="btn btn-primary mr-2" style="margin-right: 5px" type="submit" [disabled]="isEdditing">OK</button>
+        <button class="btn btn-danger" routerLink="../../" [disabled]="isEdditing">Anuluj</button>
       </div>
     </form>
+    <div style="text-align: center;" *ngIf="isEdditing">
+      <app-spinner>
+        
+      </app-spinner>
+    </div>
     </div>
   </div>
   

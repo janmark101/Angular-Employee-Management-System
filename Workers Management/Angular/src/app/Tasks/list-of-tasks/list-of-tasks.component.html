@@ -23,7 +23,7 @@
                 </div>
                 
                 <div style="display: flex; flex-direction: column; justify-content: space-between; width: 20%;margin-right: 5px;margin-bottom: 5px;margin-top: -5px;">
-                    <button class="btn btn-primary" [routerLink]="[i,'edit']">Edytuj</button>
+                    <button class="btn btn-primary"  (click)="DelayChange(i,'edit')">Edytuj</button>
                     <button class="btn btn-secondary" [routerLink]="[i,'move']">Przenieś</button>
                     <button class="btn btn-danger" (click)="DeleteTask(i)">Usuń</button>
                     <button class="btn btn-success" (click)="SaveStatus(i)">Zapisz</button>

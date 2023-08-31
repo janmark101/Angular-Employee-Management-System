@@ -105,9 +105,16 @@ export class WorkerServiceService {
     });
   }
 
-  saveNewStatus(status:string,id_Task:number,id_worker:number){
-    this.workers[id_worker].tasks[id_Task].status = status;
-    this.workersSubject.next([...this.workers]);
+  UpdateTask(task:Task,id_worker:number,id_Task:number){
+    // this.workers[id_worker].tasks[id_Task].status = status;
+    // this.workersSubject.next([...this.workers]);
+
+    this.http.patch(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks/${Object.keys(this.workersTemp[id_worker]!.tasks)[id_Task]}.json`,task,
+    {
+      params: new HttpParams().set('auth',this.AuthService.user.value.token!)
+    }).subscribe(res=>{console.log(res);
+    },error =>{console.error(error);
+    });
   }
 
   saveZaawansowanie(value:number,id_Task:number,id_worker:number){
@@ -115,9 +122,16 @@ export class WorkerServiceService {
     this.workersSubject.next([...this.workers]);
   }
 
-  deleteTask(id_Task:number,id_worker:number){
-    this.workers[id_worker].tasks.splice(id_Task,1);
-    this.workersSubject.next([...this.workers]);
+  deleteTask(id_Task:number,id_worker:number,){
+
+    console.log();
+    this.http.delete(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks/${Object.keys(this.workersTemp[id_worker]!.tasks)[id_Task]}.json`,
+    {
+      params: new HttpParams().set('auth',this.AuthService.user.value.token!)
+    }).subscribe(res=>{console.log(res);
+    },error =>{console.error(error);
+    });
+
   }
 
   editTask(task:Task,id_worker:number,id_task:number){

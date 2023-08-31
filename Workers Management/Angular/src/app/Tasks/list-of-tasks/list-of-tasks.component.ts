@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Worker } from 'src/app/Models/worker.models';
 import { WorkerServiceService } from 'src/app/Service/worker-service.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Options } from '@angular-slider/ngx-slider';
+import { Task } from 'src/app/Models/task.models';
 
 @Component({
   selector: 'app-list-of-tasks',
@@ -22,7 +23,7 @@ export class ListOfTasksComponent implements OnInit{
 
   WorkerTasks : any[] = [];
 
-  constructor(private acitvroute : ActivatedRoute,private service : WorkerServiceService){}
+  constructor(private acitvroute : ActivatedRoute,private service : WorkerServiceService,private router:Router){}
 
   newStatus : string | undefined;
 
@@ -43,14 +44,18 @@ export class ListOfTasksComponent implements OnInit{
   }
 
   SaveStatus(id_task:number){
-    if (this.newStatus != undefined){
-      this.service.saveNewStatus(this.newStatus,id_task,this.id_worker!)
-    }
-    this.service.saveZaawansowanie(this.value![id_task],id_task,this.id_worker!);
+    const newTask = new Task(this.WorkerTasks[id_task].task_content,this.newStatus,this.value![id_task],this.WorkerTasks[id_task].category)
+    this.service.UpdateTask(newTask,this.id_worker!,id_task);
   }
 
   DeleteTask(id_task:number){
-    this.value.splice(id_task,1);
+    this.WorkerTasks.splice(id_task,1);
     this.service.deleteTask(id_task,this.id_worker!);
+  }
+
+  DelayChange(i:number,route:string){
+    setTimeout(()=>{
+      this.router.navigate(['workers/',this.id_worker,'tasks',i,`${route}`])
+    },300);
   }
 }
