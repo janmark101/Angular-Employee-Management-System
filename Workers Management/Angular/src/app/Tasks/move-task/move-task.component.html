@@ -22,7 +22,7 @@
       </div>
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
         <label>Nowy status zadania:  </label>
-        <app-drop-down style="margin-right: 30%;" (ItemEvent)="chooseStatus($event)">
+        <app-drop-down style="margin-right: 30%;" (ItemEvent)="chooseStatus($event)" [WorkerTasks]="UserTasks" [id] ="id_task">
         </app-drop-down>
       </div>
       <div class="d-flex justify-content-start" style="margin-top: 10px;">

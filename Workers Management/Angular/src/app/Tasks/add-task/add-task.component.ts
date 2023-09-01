@@ -25,7 +25,7 @@ export class AddTaskComponent implements OnInit{
   ngOnInit(): void {
     this.id = this.acitvroute.snapshot.params["id"];
     this.CategorySub = this.service.getCategory().subscribe((data: string[]) => {
-      this.Category = data;
+      this.Category = Object.values(data);
     });
   }
 
@@ -49,10 +49,11 @@ export class AddTaskComponent implements OnInit{
     const newTask = new Task(form.value.task_content,"Nie rozpoczęte",0,this.selectedOption!);
     
     this.service.addTaskWorker(newTask,this.id!);
+
     setTimeout(()=>{
       this.isAdding = false;
       this.route.navigate(['workers',this.id,'tasks']);
-    },1000);
+    },1200);
       }
       else{
         this.Message = "Dont leave any empty fields!";

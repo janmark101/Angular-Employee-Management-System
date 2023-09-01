@@ -22,6 +22,7 @@ export class EditWorkerComponent implements OnInit{
   }
 
   onSubmit(form: NgForm){
+    
     this.isEdditing = true;
     this.worker!.nr_worker = form.value.nr_worker;
     this.worker!.section = form.value.section;

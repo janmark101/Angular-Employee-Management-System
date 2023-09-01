@@ -5,17 +5,17 @@
         <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
             <label>Kategoria zadania:</label>
             <select [(ngModel)]="selectedCategory" name="selectedOption">
-                <option *ngFor="let option of Category" [value]="option" [selected]="option === selectedCategory">{{ option }}</option>
+                <option *ngFor="let option of Category;let i =index" [value]="option" [selected]="option === selectedCategory">{{ option.name }}</option> 
               </select>
           </div>
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" >
         <label>Treść zadania:</label>
-        <input type="text" id="task_content" ngModel name="task_content"  [ngModel]="worker!.tasks[id_task!].task_content">
+        <input type="text" id="task_content" ngModel name="task_content"  [ngModel]="UserTasks[id_task!].task_content">
       </div>
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
         <label>Status:</label>
-        <!-- <app-drop-down (ItemEvent)="newStatus($event)" [worker]="worker" [id] ="id_task">
-        </app-drop-down> -->
+        <app-drop-down (ItemEvent)="newStatus($event)" [WorkerTasks]="UserTasks" [id] ="id_task">
+        </app-drop-down>
       </div>
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
         <label>Zaawansowanie: </label>

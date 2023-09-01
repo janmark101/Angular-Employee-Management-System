@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { WorkerServiceService } from 'src/app/Service/worker-service.service';
 import { Worker } from 'src/app/Models/worker.models';
+import { Task } from 'src/app/Models/task.models';
 
 @Component({
   selector: 'app-move-task',
@@ -20,12 +21,14 @@ export class MoveTaskComponent {
   Status : string | undefined;
 
   Message : any;
-
+  UserTasks :any;
+  worker :any;
+  id_task : any;
 
   ChooseWorker(worker:Worker,id:number){
     this.id_choosen_worker = id;
     this.new_task_worker = this.list_of_workers_search[id];
-    this.choosenWorker = this.list_of_workers_search[id].firstname +' '+ this.list_of_workers_search[id].lastname;
+    this.choosenWorker = this.list_of_workers_search[id].firstname +' '+ this.list_of_workers_search[id].lastname;    
   }
 
   Search_workers(){
@@ -36,9 +39,15 @@ export class MoveTaskComponent {
 
 
   ngOnInit(): void {
-    this.WorkersSub = this.service.getWorkers().subscribe((data: Worker[]) => {
+    this.WorkersSub = this.service.getWorkers().subscribe((data: any[]) => {
       this.Workers = data;
+      this.worker = this.service.getWorker(this.activroute.snapshot.params['id']);
+      
+      
     });
+    this.id_task = this.activroute.snapshot.params['idTask'];
+    this.UserTasks = Object.values(this.worker!.tasks);
+    this.Status = this.UserTasks[this.id_task].status;
   }
 
   ngOnDestroy(): void {
@@ -48,7 +57,10 @@ export class MoveTaskComponent {
   ApproveMove(){
     if (this.choosenWorker !== undefined){
       if (this.Status !== undefined){
-        this.service.MoveTask(this.activroute.snapshot.params['id'],this.activroute.snapshot.params['idTask'],this.Status!,this.new_task_worker!);
+        const task = new Task(this.UserTasks[this.id_task].task_content,this.UserTasks[this.id_task].status,this.UserTasks[this.id_task].advanced,this.UserTasks[this.id_task].task_category);
+        
+//        const task = Object.values(this.worker!.tasks)[this.activroute.snapshot.params['idTask']];        
+        this.service.MoveTask(this.activroute.snapshot.params['id'],this.id_task,this.Status!,this.new_task_worker!,task);
         this.route.navigate(['/workers',this.activroute.snapshot.params['id'],'tasks']);
       }
       else {

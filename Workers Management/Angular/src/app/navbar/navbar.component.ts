@@ -16,7 +16,10 @@ export class NavbarComponent implements OnInit{
   
     this.AuthService.user.subscribe(response =>{
       this.isLogged = !!response;
+      if (this.isLogged)
+        this.AuthService.setLogged(this.isLogged);
     });
+    
   }
 
   Logout(){    

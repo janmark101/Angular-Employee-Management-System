@@ -18,9 +18,11 @@ export class WorkerServiceService {
   private workersTemp :any[] =[];
 
   private workersSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>(this.workersTemp);
-  private Category : string[] = ["Budowa aplikacji","Rozwój aplikacji"];
 
+  private Category : string[] = [];
   private CategorySubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(this.Category);
+
+
 
   constructor(private http:HttpClient,private AuthService : AuthServiceService) { }
 
@@ -41,6 +43,7 @@ export class WorkerServiceService {
 
   addWorker(worker:Worker){
     this.workersTemp.push(worker);
+    
     this.workersSubject.next([...this.workersTemp]);   
     this.http.post<any>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers.json`,worker,
     {
@@ -84,19 +87,35 @@ export class WorkerServiceService {
   }
 
   getCategory(): Observable<string[]>{
+    this.http.get<any[]>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/category.json`,
+    {
+      params : new HttpParams().set('auth',this.AuthService.user.value.token!)
+    }).subscribe((data:any[])=>{     
+      this.Category =data;  
+      this.CategorySubject.next(this.Category);
+      
+    },error =>{console.error(error);
+    })
     return this.CategorySubject.asObservable();
   }
 
   addCategory(category:string){
-    this.Category.push(category);
-    this.CategorySubject.next([...this.Category]);
+    let newCategory = {name:category};
+
+    // this.Category.push(category);
+    // this.CategorySubject.next([...this.Category]);
+
+    this.http.post<any>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/category.json`,newCategory,
+    {
+      params : new HttpParams().set('auth',this.AuthService.user.value.token!)
+    }).subscribe((data:any[])=>{     
+      console.log(data);
+    },error =>{console.error(error);
+    })
+    
   }
 
-  addTaskWorker(task:Task,id_worker:number){
-    
-      Object.values(this.workersTemp[id_worker].tasks).push(task);
-      this.workersSubject.next([...this.workersTemp]); 
-      
+  addTaskWorker(task:Task,id_worker:number){      
       this.http.post<Task>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks.json`,task,
     {
       params: new HttpParams().set('auth',this.AuthService.user.value.token!)
@@ -106,8 +125,6 @@ export class WorkerServiceService {
   }
 
   UpdateTask(task:Task,id_worker:number,id_Task:number){
-    // this.workers[id_worker].tasks[id_Task].status = status;
-    // this.workersSubject.next([...this.workers]);
 
     this.http.patch(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks/${Object.keys(this.workersTemp[id_worker]!.tasks)[id_Task]}.json`,task,
     {
@@ -117,14 +134,8 @@ export class WorkerServiceService {
     });
   }
 
-  saveZaawansowanie(value:number,id_Task:number,id_worker:number){
-    this.workers[id_worker].tasks[id_Task].advanced=value;
-    this.workersSubject.next([...this.workers]);
-  }
 
   deleteTask(id_Task:number,id_worker:number,){
-
-    console.log();
     this.http.delete(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks/${Object.keys(this.workersTemp[id_worker]!.tasks)[id_Task]}.json`,
     {
       params: new HttpParams().set('auth',this.AuthService.user.value.token!)
@@ -134,17 +145,20 @@ export class WorkerServiceService {
 
   }
 
-  editTask(task:Task,id_worker:number,id_task:number){
-    this.workers[id_worker].tasks[id_task] = task;
-    this.workersSubject.next([...this.workers]);
+  editTask(task:any,id_worker:number,id_task:number){
+     this.http.patch<Task>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/workers/${Object.keys(this.workers)[id_worker]}/tasks/${Object.keys(this.workersTemp[id_worker]!.tasks)[id_task]}.json`,task,
+    {
+      params: new HttpParams().set('auth',this.AuthService.user.value.token!)
+    }).subscribe(res=>{console.log(res);
+    },error =>{console.error(error);
+    });
+    
   }
 
-  MoveTask(id_worker : number,id_task:number,status:string,new_task_worker: Worker){
-    this.workers[id_worker].tasks[id_task].status = status;
-    const Task = this.workers[id_worker].tasks[id_task];
-    const new_task_worker_id = this.workers.indexOf(new_task_worker);
+  MoveTask(id_worker : number,id_task:number,status:string,new_task_worker: Worker,task:any){
+    const new_task_worker_id = this.workersTemp.indexOf(new_task_worker);       
     this.deleteTask(id_task,id_worker);
-    this.addTaskWorker(Task,new_task_worker_id);
+    this.addTaskWorker(task,new_task_worker_id);
   }
 
   get_list_of_tasks(){
@@ -152,10 +166,10 @@ export class WorkerServiceService {
     let Tasks_for_one_worker :number  = 0;
     let Task_done_for_one_worker : number = 0;
 
-    for(let i =0; i<this.workers.length;i++){
-      for (let j =0; j< this.workers[i].tasks.length;j++){
+    for(let i =0; i<this.workersTemp.length;i++){
+      for (let j =0; j< this.workersTemp[i].tasks.length;j++){
         Tasks_for_one_worker ++;
-        if (this.workers[i].tasks[j].status === "Zakończone"){
+        if (this.workersTemp[i].tasks[j].status === "Zakończone"){
           Task_done_for_one_worker ++;
         }
       }

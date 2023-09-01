@@ -20,9 +20,7 @@ export class ListOfWorkersComponent implements OnInit{
     this.workersSub = this.service.getWorkers().subscribe((data: Worker[]) => {           
       this.workers = data;
     });
-    // this.list_of_tasks = this.service.get_list_of_tasks();
 
-    //console.log(this.workers);
   }
 
   ngOnDestroy(): void {

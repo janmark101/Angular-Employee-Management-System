@@ -16,27 +16,32 @@ export class EditTaskComponent implements OnInit{
   id_worker : number | undefined;
   worker : Worker | undefined;
   private CategorySub : Subscription | undefined;
-  Category : string[]| undefined;
+  Category : { name: string }[]| undefined;
   selectedCategory : string | undefined;
   defaultSliderValue : number | undefined;
   newStatusTask : string | undefined;
 
-  UserTask : any[] = [];
+  UserTasks : Task |any;
   isEdditing : boolean = false;
   constructor( private Activeroute: ActivatedRoute, private service : WorkerServiceService, private route : Router){};
 
   ngOnInit(): void {
     this.id_worker = this.Activeroute.snapshot.params['id'];
-    this.worker = this.service.getWorker(this.id_worker!);
-    console.log(this.service.getWorker(this.id_worker!));
-    
-    // this.id_task = this.Activeroute.snapshot.params['idTask'];
+    this.id_task = this.Activeroute.snapshot.params['idTask'];
+    if ((!!this.id_worker) && (!!this.id_task)){
+      this.worker = this.service.getWorker(this.id_worker!);
+      this.UserTasks = Object.values(this.worker!.tasks); 
+      this.selectedCategory  = this.UserTasks[this.id_task!].task_category;
+      this.defaultSliderValue = this.UserTasks[this.id_task!].advanced;
+      this.newStatusTask = this.UserTasks[this.id_task!].status;
+    }
  
-    // this.CategorySub = this.service.getCategory().subscribe((data: string[]) => {
-    //   this.Category = data;
-    // });
-    // this.selectedCategory  = this.worker!.tasks[this.id_task!].task_category;
-    // this.defaultSliderValue = this.worker!.tasks[this.id_task!].advanced;
+    this.CategorySub = this.service.getCategory().subscribe((data: any) => {
+      this.Category = Object.values(data);
+      console.log(this.Category);
+      
+    });
+
   }
 
   ngOnDestroy(): void {
@@ -47,21 +52,18 @@ export class EditTaskComponent implements OnInit{
   
   onSubmit(form : NgForm){
     this.isEdditing = true;
-    // console.log(this.newStatusTask);
-    // if (this.newStatusTask === undefined){
-    //   const task : Task = new Task(form.value.task_content,this.worker!.tasks[this.id_task!].status,this.defaultSliderValue,this.selectedCategory!);
-    //   this.service.editTask(task,this.id_worker!,this.id_task!);
-    // this.route.navigate(['/workers',this.id_worker,'tasks']);
-    // }
-    // else{
-    //   const task : Task = new Task(form.value.task_content,this.newStatusTask,this.defaultSliderValue,this.selectedCategory!);
-    //   this.service.editTask(task,this.id_worker!,this.id_task!);
-    // this.route.navigate(['/workers',this.id_worker,'tasks']);
-    // }
+    
+    this.UserTasks[this.id_task!].task_content = form.value.task_content;
+    this.UserTasks[this.id_task!].status = this.newStatusTask!;
+    this.UserTasks[this.id_task!].advanced = this.defaultSliderValue!;
+    this.UserTasks[this.id_task!].task_category = this.selectedCategory!;
+
+    this.service.editTask(this.UserTasks[this.id_task!],this.id_worker!,this.id_task!);    
 
     setTimeout(()=>{
       this.isEdditing = false;
       this.route.navigate(['/workers',this.id_worker,'tasks']);
+      
     },500);
   
   }

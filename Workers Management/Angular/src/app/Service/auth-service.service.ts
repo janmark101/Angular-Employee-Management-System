@@ -22,6 +22,8 @@ export class AuthServiceService {
 
   user = new BehaviorSubject<User>(null!);
 
+  isLogged : boolean |any;
+
   constructor(private http : HttpClient,private router : Router) { }
 
   SignUp(email:string,password:string){
@@ -116,6 +118,10 @@ export class AuthServiceService {
       localStorage.removeItem('userData');
       this.user.next(null!);
       this.router.navigate(['']);
+    }
+
+    setLogged(logged:boolean){
+      this.isLogged = logged;
     }
 
   }
