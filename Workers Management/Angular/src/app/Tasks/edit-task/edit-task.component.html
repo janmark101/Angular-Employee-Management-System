@@ -5,7 +5,7 @@
         <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
             <label>Kategoria zadania:</label>
             <select [(ngModel)]="selectedCategory" name="selectedOption">
-                <option *ngFor="let option of Category;let i =index" [value]="option" [selected]="option === selectedCategory">{{ option.name }}</option> 
+                <option *ngFor="let option of Category;let i =index" [value]="option.name" [selected]="option.name === selectedCategory">{{ option.name }}</option> 
               </select>
           </div>
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;" >

@@ -155,7 +155,7 @@ export class WorkerServiceService {
     
   }
 
-  MoveTask(id_worker : number,id_task:number,status:string,new_task_worker: Worker,task:any){
+  MoveTask(id_worker : number,id_task:number,new_task_worker: Worker,task:any){
     const new_task_worker_id = this.workersTemp.indexOf(new_task_worker);       
     this.deleteTask(id_task,id_worker);
     this.addTaskWorker(task,new_task_worker_id);

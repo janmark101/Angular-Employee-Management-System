@@ -52,19 +52,21 @@ export class EditTaskComponent implements OnInit{
   
   onSubmit(form : NgForm){
     this.isEdditing = true;
+
+    console.log(form.value.selectedOption);
     
-    this.UserTasks[this.id_task!].task_content = form.value.task_content;
-    this.UserTasks[this.id_task!].status = this.newStatusTask!;
-    this.UserTasks[this.id_task!].advanced = this.defaultSliderValue!;
-    this.UserTasks[this.id_task!].task_category = this.selectedCategory!;
+      this.UserTasks[this.id_task!].task_content = form.value.task_content;
+      this.UserTasks[this.id_task!].status = this.newStatusTask!;
+      this.UserTasks[this.id_task!].advanced = this.defaultSliderValue!;
+      this.UserTasks[this.id_task!].task_category = this.selectedCategory!;
 
-    this.service.editTask(this.UserTasks[this.id_task!],this.id_worker!,this.id_task!);    
+      this.service.editTask(this.UserTasks[this.id_task!],this.id_worker!,this.id_task!);    
 
-    setTimeout(()=>{
-      this.isEdditing = false;
-      this.route.navigate(['/workers',this.id_worker,'tasks']);
-      
-    },500);
+      setTimeout(()=>{
+        this.isEdditing = false;
+        this.route.navigate(['/workers',this.id_worker,'tasks']);
+        
+      },500);
   
   }
 

@@ -15,7 +15,7 @@ export class AddTaskComponent implements OnInit{
 
   id : number | null  | undefined;
   private CategorySub : Subscription | undefined;
-  Category : string[]| undefined;
+  Category : { name: string }[]| undefined;
   selectedOption: string |undefined ;
   add_category = false;
 
@@ -24,7 +24,7 @@ export class AddTaskComponent implements OnInit{
 
   ngOnInit(): void {
     this.id = this.acitvroute.snapshot.params["id"];
-    this.CategorySub = this.service.getCategory().subscribe((data: string[]) => {
+    this.CategorySub = this.service.getCategory().subscribe((data: any) => {
       this.Category = Object.values(data);
     });
   }
@@ -36,6 +36,7 @@ export class AddTaskComponent implements OnInit{
   onSubmit(form: NgForm){
     if (this.add_category === true){
       if (form.valid){
+        this.Category?.push({name: form.value.category_name});
         this.service.addCategory(form.value.category_name);
         this.add_category = !this.add_category
       }

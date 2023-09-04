@@ -6,7 +6,7 @@
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
       <div class="d-flex flex-row justify-content-between" style="margin-top: 5px;">
         <select [(ngModel)]="selectedOption" name="selectedOption" [required]="!add_category">
-            <option *ngFor="let option of Category" >{{ option }}</option>
+            <option *ngFor="let option of Category" >{{ option.name }}</option>
           </select>
         <button type="button" class="btn btn-primary" (click)="CategoryFunc()" *ngIf="!add_category">Nowa kategoria</button>
         <button type="button" class="btn btn-primary" (click)="CategoryFunc()" *ngIf="add_category" >Nowe zadanie</button>

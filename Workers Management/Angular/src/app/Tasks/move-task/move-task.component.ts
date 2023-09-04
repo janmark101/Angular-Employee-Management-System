@@ -57,10 +57,10 @@ export class MoveTaskComponent {
   ApproveMove(){
     if (this.choosenWorker !== undefined){
       if (this.Status !== undefined){
-        const task = new Task(this.UserTasks[this.id_task].task_content,this.UserTasks[this.id_task].status,this.UserTasks[this.id_task].advanced,this.UserTasks[this.id_task].task_category);
+        const task = new Task(this.UserTasks[this.id_task].task_content,this.Status,this.UserTasks[this.id_task].advanced,this.UserTasks[this.id_task].task_category);
         
 //        const task = Object.values(this.worker!.tasks)[this.activroute.snapshot.params['idTask']];        
-        this.service.MoveTask(this.activroute.snapshot.params['id'],this.id_task,this.Status!,this.new_task_worker!,task);
+        this.service.MoveTask(this.activroute.snapshot.params['id'],this.id_task,this.new_task_worker!,task);
         this.route.navigate(['/workers',this.activroute.snapshot.params['id'],'tasks']);
       }
       else {
