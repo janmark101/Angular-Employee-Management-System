@@ -1,6 +1,7 @@
 # Workers Management System
 
-This project is about employee management. After logging in or registering, the user gets full access to the website where he can add employees and assign them tasks.
+This project is about employee management. After logging in or registering, the user gets full access to the website where he can add employees and assign them tasks. 
+The project was connected to the database from the 'Firebase' website.
 
 ## Features
 
