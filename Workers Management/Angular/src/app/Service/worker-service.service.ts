@@ -102,9 +102,6 @@ export class WorkerServiceService {
   addCategory(category:string){
     let newCategory = {name:category};
 
-    // this.Category.push(category);
-    // this.CategorySubject.next([...this.Category]);
-
     this.http.post<any>(`https://workersmanagementdatabase-default-rtdb.europe-west1.firebasedatabase.app/${this.AuthService.user.value.id}/category.json`,newCategory,
     {
       params : new HttpParams().set('auth',this.AuthService.user.value.token!)
