@@ -1,6 +1,14 @@
-# Angular
+# Workers Management System
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+This project is about employee management. After logging in or registering, the user gets full access to the website where he can add employees and assign them tasks.
+
+## Features
+
+- Register and login
+- Add / delete / edit worker
+- Add / delete / edit task 
+- Transfer the task from one employee to another
+- Set status and advanced for task
 
 ## Development server
 
@@ -25,3 +33,18 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## 🛠 Built With
+- TypeScript
+- Angular
+- Bootstrap
+- FireBase
+
+Workers list : 
+
+![workers list](images/WorkersList.png)
+
+Workers tasks : 
+
+![workers tasks](images/WorkersTask.png)
